@@ -1,0 +1,14 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test_apple:
+    uses: ./.github/workflows/test_apple.yml
+
+  # test_windows:
+  #   uses: ./.github/workflows/test_windows.yml
