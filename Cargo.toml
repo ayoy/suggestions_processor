@@ -6,6 +6,12 @@ edition = "2021"
 [lib]
 crate-type = ["rlib", "cdylib", "staticlib"]
 
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
 [dependencies]
 url = "2"
 serde = { version = "1", features = ["derive"] }
