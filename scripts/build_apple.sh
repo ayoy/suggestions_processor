@@ -85,3 +85,11 @@ xcodebuild -create-xcframework \
   -output "${DIST_DIR}/${NAME}.xcframework"
 
 echo "✅ Built ${DIST_DIR}/${NAME}.xcframework"
+
+ditto -c -k --keepParent "${DIST_DIR}/${NAME}.xcframework" "${DIST_DIR}/${NAME}.xcframework.zip"
+
+echo "✅ Zipped ${DIST_DIR}/${NAME}.xcframework.zip"
+
+checksum="$(swift package compute-checksum "${DIST_DIR}/${NAME}.xcframework.zip")"
+echo "$checksum" > "${DIST_DIR}/${NAME}.xcframework.zip.checksum.txt"
+echo "Checksum: ${checksum}"

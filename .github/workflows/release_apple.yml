@@ -37,6 +37,10 @@ jobs:
           XCODE_PATH="/Applications/Xcode_${XCODE_VERSION}.app/Contents/Developer"
           sudo xcode-select -s "$XCODE_PATH"
 
+      - name: Install llvm
+        run: |
+          brew install llvm
+
       - name: Build Apple XCFramework
         run: |
           ./scripts/build_apple.sh
