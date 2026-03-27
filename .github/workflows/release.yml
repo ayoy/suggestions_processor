@@ -15,19 +15,15 @@ jobs:
     with:
       tag: ${{ github.ref_name }}
 
-  # Add other platform-specific release jobs here as they are added.
-  # release_windows:
-  #   uses: ./.github/workflows/release_windows.yml
-  #   with:
-  #     tag: ${{ github.ref_name }}
-  #   secrets: inherit
+  release_windows:
+    uses: ./.github/workflows/release_windows.yml
+    with:
+      tag: ${{ github.ref_name }}
 
   release:
 
     runs-on: ubuntu-latest
-    # Wait for the Android, Apple and Windows release workflows to complete
-    # Add more platform-specific jobs here as they are added.
-    needs: [release_apple]
+    needs: [release_apple, release_windows]
 
     steps:
 

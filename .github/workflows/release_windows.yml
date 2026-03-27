@@ -1,0 +1,50 @@
+name: Release Windows
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        description: The tag to release
+        required: true
+        type: string
+
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The tag to release
+        required: true
+        type: string
+
+concurrency:
+  group: win-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run unit tests
+        env:
+          CARGO_TERM_COLOR: always
+        run: cargo test
+
+      - name: Build Windows artifacts
+        run: |
+          .\scripts\build_windows.ps1
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-dlls
+          path: |
+            dist/windows/bin/*
+            dist/windows/lib/*
+            dist/include/*
+          retention-days: 1
