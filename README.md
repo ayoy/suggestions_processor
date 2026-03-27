@@ -56,7 +56,9 @@ Input and output are JSON-serialized. See `types.rs` for the full schema (`Proce
 ### Prerequisites
 
 - Rust toolchain (stable)
-- For Apple targets: Xcode command line tools, `cbindgen` (`cargo install cbindgen`)
+- `cbindgen` (`cargo install cbindgen`)
+- For Apple targets: Xcode command line tools, `llvm` (`brew install llvm`)
+- For Windows targets: MSVC build tools
 
 ### Run tests
 
@@ -76,6 +78,19 @@ This produces `dist/apple/SuggestionsProcessorRust.xcframework.zip` containing a
 - iOS Simulator (arm64, x86_64)
 
 Minimum deployment targets: macOS 11.3, iOS 15.0.
+
+### Build for Windows
+
+```powershell
+.\scripts\build_windows.ps1
+```
+
+This produces artifacts in `dist/windows/` for three architectures (x86, x64, arm64):
+- `bin/suggestions_processor-{arch}.dll` — dynamic libraries
+- `lib/suggestions_processor-{arch}.lib` — import libraries
+- `include/ddg_suggestions_processor.h` — C header
+
+A NuGet package spec is available at `windows/windows.nuspec`.
 
 ## Integration
 
