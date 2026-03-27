@@ -39,12 +39,13 @@ jobs:
         run: |
           .\scripts\build_windows.ps1
 
+      - name: Zip Windows artifacts
+        run: |
+          Compress-Archive -Path dist\windows\bin, dist\windows\lib, dist\include -DestinationPath dist\windows\SuggestionsProcessorRust-windows.zip
+
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
         with:
           name: windows-dlls
-          path: |
-            dist/windows/bin/*
-            dist/windows/lib/*
-            dist/include/*
+          path: dist/windows/SuggestionsProcessorRust-windows.zip
           retention-days: 1
